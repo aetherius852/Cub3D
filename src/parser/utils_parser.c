@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 13:17:21 by efsilva-          #+#    #+#             */
 /*   Updated: 2026/06/22 10:50:18 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/06/16 12:18:43 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +20,13 @@ char	*read_line(int fd)
 	int		bytes;
 	int		i;
 
+char *read_line(int fd)
+{
+	int		bytes;
+	int		i;
+	char	*line;
+	char	buf[i];
+
 	line = malloc(10000);
 	if (!line)
 		return (NULL);
@@ -30,6 +38,13 @@ char	*read_line(int fd)
 			break ;
 		line[i++] = c;
 		bytes = read(fd, &c, 1);
+	bytes = read(fd, buf, 1);
+	while (bytes > 0)
+	{
+		if (buf[0] == '\n')
+			break ;
+		line[i++] = buf[0];
+		bytes = read(fd, read, 1);
 	}
 	line[i] = '\0';
 	if (bytes <= 0 && i == 0)
@@ -68,6 +83,7 @@ void	free_map(t_cub *cub)
 void	free_cub(t_cub *cub)
 {
 	if (!cub)
+	if(!cub)
 		return ;
 	if (cub->no_texture)
 		free(cub->no_texture);

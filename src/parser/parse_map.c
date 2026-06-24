@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:31:31 by efsilva-          #+#    #+#             */
 /*   Updated: 2026/06/22 10:46:18 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/06/17 11:18:11 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +38,7 @@ static char	**grow_map(t_cub *cub, char **map, int count)
 static char	add_line(t_cub *cub, char *line, int i)
 {
 	int	len;
+	int len;
 
 	len = ft_strlen(line);
 	if (len > cub->map_width)
