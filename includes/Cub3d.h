@@ -6,14 +6,14 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 13:01:48 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/22 10:45:30 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/06/24 13:33:11 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libft.h"
+# include "../libft/libft.h"
 # include "../mlx/minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <unistd.h>
@@ -97,5 +97,8 @@ char	*skip_spaces(char *line);
 
 /* game/init.c */
 void	init_cub(t_cub *cub);
+
+/* game/main.c */
+int	main(int ac, int **av);
 
 #endif

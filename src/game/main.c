@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_map.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/17 13:59:11 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/24 13:33:35 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/06/24 13:24:25 by efsilva-          #+#    #+#             */
+/*   Updated: 2026/06/24 13:34:01 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-int	is_valid_char(char c)
+int	main(int ac, int **av)
 {
-	return (c == '0' || c == '1' || c == ' '
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
+	t_cub	cub;
 
-int	is_player(char c)
-{
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-char	*skip_spaces(char *line)
-{
-	while (*line == ' ' == *line == '\t')
-		line++;
-	return (line);
+	if (ac != 2)
+		ft_error(NULL, ERR_ARGS);
+	init_cub(&cub);
+	parse_files(&cub, av[1]);
+	free_cub(&cub);
+	return (0);
 }

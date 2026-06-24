@@ -6,12 +6,11 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:36:15 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/22 11:08:33 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/06/24 13:33:41 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3d.h"
-
+#include "../../includes/Cub3d.h"
 static void	check_extension(t_cub *cub, const char *path)
 {
 	int	len;

@@ -6,11 +6,11 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 13:31:49 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/22 10:51:32 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/06/24 13:33:30 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3d.h"
+#include "../../includes/Cub3d.h"
 
 static void	check_chars(t_cub *cub)
 {
