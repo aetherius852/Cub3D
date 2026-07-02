@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_map.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/17 13:59:11 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/01 13:29:54 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/06/24 13:24:25 by efsilva-          #+#    #+#             */
+/*   Updated: 2026/07/02 01:55:55 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-int	is_valid_char(char c)
+static int	game_loop(t_cub *cub)
 {
-	return (c == '0' || c == '1' || c == ' '
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	move_player(cub);
+	render(cub);
+	return (0);
 }
 
-int	is_player(char c)
+int	main(int ac, char **av)
 {
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
+	t_cub	cub;
 
-char	*skip_spaces(char *line)
-{
-	while (*line == ' ' || *line == '\t')
-		line++;
-	return (line);
+	if (ac != 2)
+		ft_error(NULL, ERR_ARGS);
+	init_cub(&cub);
+	parse_file(&cub, av[1]);
+	init_player_dir(&cub);
+	init_mlx(&cub);
+	load_textures(&cub);
+	render(&cub);
+	listen_for_input(&cub);
+	mlx_loop_hook(cub.mlx, game_loop, &cub);
+	mlx_loop(cub.mlx);
+	return (0);
 }

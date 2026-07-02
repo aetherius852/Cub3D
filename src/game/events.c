@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_map.c                                        :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/17 13:59:11 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/01 13:29:54 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/06/26 00:00:00 by efsilva-          #+#    #+#             */
+/*   Updated: 2026/07/02 02:06:57 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-int	is_valid_char(char c)
+int	handle_keypress(int key, t_cub *cub)
 {
-	return (c == '0' || c == '1' || c == ' '
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	if (key == 65307)
+		exit_clean(cub, 0);
+	return (0);
 }
 
-int	is_player(char c)
+int	handle_close(t_cub *cub)
 {
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-char	*skip_spaces(char *line)
-{
-	while (*line == ' ' || *line == '\t')
-		line++;
-	return (line);
+	exit_clean(cub, 0);
+	return (0);
 }

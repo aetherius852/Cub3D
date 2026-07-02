@@ -6,11 +6,19 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 13:31:49 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/22 10:51:32 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/02 02:06:32 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3d.h"
+#include "../../includes/Cub3d.h"
+
+static void	check_player(t_cub *cub, int i, int j, int *players)
+{
+	*players += 1;
+	cub->player_dir = cub->map[i][j];
+	cub->player_x = (double)j + 0.5;
+	cub->player_y = (double)i + 0.5;
+}
 
 static void	check_chars(t_cub *cub)
 {
@@ -47,7 +55,7 @@ static void	check_space_neighbors(t_cub *cub, int i, int j)
 	if (j >= row_len || cub->map[i - 1][j] == ' ')
 		ft_error(cub, ERR_CLOSE);
 	row_len = ft_strlen(cub->map[i + 1]);
-	if (j >= row_len || cub->map[i - 1][j] == ' ')
+	if (j >= row_len || cub->map[i + 1][j] == ' ')
 		ft_error(cub, ERR_CLOSE);
 	if (j == 0 || cub->map[i][j - 1] == ' ')
 		ft_error(cub, ERR_CLOSE);
@@ -55,7 +63,7 @@ static void	check_space_neighbors(t_cub *cub, int i, int j)
 		ft_error(cub, ERR_CLOSE);
 }
 
-static void	check_open_ceils(t_cub *cub)
+static void	check_open_cells(t_cub *cub)
 {
 	int	i;
 	int	j;
@@ -79,5 +87,5 @@ void	valid_map(t_cub *cub)
 	if (!cub->map || cub->map_height == 0)
 		ft_error(cub, ERR_MAP);
 	check_chars(cub);
-	check_open_ceils(cub);
+	check_open_cells(cub);
 }

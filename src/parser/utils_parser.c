@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/15 13:17:21 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/22 10:50:18 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/06/15 00:00:00 by efsilva-          #+#    #+#             */
+/*   Updated: 2026/07/02 02:35:42 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3d.h"
+#include "../../includes/Cub3d.h"
 
 char	*read_line(int fd)
 {
@@ -40,9 +40,18 @@ char	*read_line(int fd)
 	return (line);
 }
 
+void	check_config(t_cub *cub)
+{
+	if (!cub->no_texture || !cub->so_texture
+		|| !cub->we_texture || !cub->ea_texture)
+		ft_error(cub, ERR_TEXTURE);
+	if (cub->floor_rgb[0] == -1 || cub->ceil_rgb[0] == -1)
+		ft_error(cub, ERR_COLOR);
+}
+
 void	ft_error(t_cub *cub, char *msg)
 {
-	ft_putstr_fd("Error", 2);
+	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
 	if (cub)
 		free_cub(cub);
@@ -53,9 +62,9 @@ void	free_map(t_cub *cub)
 {
 	int	i;
 
-	i = 0;
-	if (!cub->map)
+	if (!cub || !cub->map)
 		return ;
+	i = 0;
 	while (cub->map[i])
 	{
 		free(cub->map[i]);
@@ -77,5 +86,7 @@ void	free_cub(t_cub *cub)
 		free(cub->we_texture);
 	if (cub->ea_texture)
 		free(cub->ea_texture);
+	if (cub->current_line)
+		free(cub->current_line);
 	free_map(cub);
 }
