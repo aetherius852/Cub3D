@@ -6,7 +6,7 @@
 #    By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 00:00:00 by efsilva-          #+#    #+#              #
-#    Updated: 2026/06/15 13:09:05 by efsilva-         ###   ########.fr        #
+#    Updated: 2026/07/02 00:49:48 by efsilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,21 @@ MLX_DIR	= minilibx-linux
 
 SRCS	= src/game/main.c \
 		  src/game/init.c \
+		  src/game/events.c \
+		  src/parser/parse_file.c \
 		  src/parser/parse_config.c \
 		  src/parser/parse_map.c \
 		  src/parser/valid_map.c \
-		  src/parser/valid_close.c \
 		  src/parser/utils_parser.c \
-		  src/render/render.c
+		  src/parser/utils_map.c \
+		  src/render/render.c \
+		  src/render/render_utils.c \
+		  src/render/textures.c \
+		  src/exit/exit.c \
+		  src/movement/input_reader.c \
+		  src/movement/player_movement.c \
+		  src/movement/player_position.c \
+		  src/movement/player_rotate.c \
 
 OBJS	= $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 

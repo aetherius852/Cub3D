@@ -5,12 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/17 12:33:27 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/24 13:33:39 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/07/02 02:03:57 by efsilva-          #+#    #+#             */
+/*   Updated: 2026/07/02 02:24:48 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
+
+static char	*clean_newline(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n' || str[i] == '\r')
+		{
+			str[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	return (str);
+}
 
 static void	parse_texture(t_cub *cub, char **dst, char *line)
 {
@@ -21,6 +40,7 @@ static void	parse_texture(t_cub *cub, char **dst, char *line)
 	path = skip_spaces(line);
 	if (!*path)
 		ft_error(cub, ERR_TEXTURE);
+	path = clean_newline(path);
 	*dst = ft_strdup(path);
 	if (!*dst)
 		ft_error(cub, ERR_MALLOC);
@@ -43,55 +63,59 @@ static void	parse_color(t_cub *cub, int *rgb, char *line)
 		ptr = ft_strchr(ptr, ',');
 		if (ptr)
 			ptr++;
+		else if (i < 2)
+			ft_error(cub, ERR_COLOR);
 		i++;
 	}
 }
 
 static int	parse_line(t_cub *cub, char *line)
 {
-	if (!ft_strncmp(line, "NO ", 3))
-		parse_texture(cub, &cub->no_texture, line + 3);
-	else if (!ft_strncmp(line, "SO ", 3))
-		parse_texture(cub, &cub->so_texture, line + 3);
-	else if (!ft_strncmp(line, "WE ", 3))
-		parse_texture(cub, &cub->we_texture, line + 3);
-	else if (!ft_strncmp(line, "EA ", 3))
-		parse_texture(cub, &cub->ea_texture, line + 3);
-	else if (!ft_strncmp(line, "F ", 2))
-		parse_texture(cub, &cub->floor_rgb, line + 2);
-	else if (!ft_strncmp(line, "C ", 2))
-		parse_texture(cub, &cub->ceil_rgb, line + 2);
-	else if (line[0] == 'i' || line[0] == '0')
+	char	*cleaned;
+
+	cleaned = skip_spaces(line);
+	if (!ft_strncmp(cleaned, "NO ", 3))
+		parse_texture(cub, &cub->no_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "SO ", 3))
+		parse_texture(cub, &cub->so_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "WE ", 3))
+		parse_texture(cub, &cub->we_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "EA ", 3))
+		parse_texture(cub, &cub->ea_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "F ", 2))
+		parse_color(cub, cub->floor_rgb, cleaned + 2);
+	else if (!ft_strncmp(cleaned, "C ", 2))
+		parse_color(cub, cub->ceil_rgb, cleaned + 2);
+	else if (cleaned[0] == '1' || cleaned[0] == '0')
 		return (0);
-	else if (ft_strlen(line) > 0)
+	else if (ft_strlen(cleaned) > 0 && cleaned[0] != '\n')
 		ft_error(cub, ERR_MAP);
 	return (1);
 }
 
-static void	check_config(t_cub *cub)
-{
-	if (!cub->no_texture || !cub->so_texture
-		|| !cub->we_texture || !cub->ea_texture)
-		ft_error(cub, ERR_TEXTURE);
-	if (cub->floor_rgb[0] == -1 || cub->ceil_rgb[0] == -1)
-		ft_error(cub, ERR_COLOR);
-}
-
 void	parse_config(t_cub *cub, int fd)
 {
-	char	*line;
+    char	*line;
+    char	*first;
 
-	line = read_line(fd);
-	while (line)
-	{
-		if (!parse_line(cub, skip_spaces(line)))
-		{
-			free(line);
-			break ;
-		}
-		free(line);
-		line = read_line(fd);
-	}
-	check_config(cub);
-	parse_map(cub, fd);
+    first = NULL;
+    line = read_line(fd);
+    cub->current_line = line;
+    while (line)
+    {
+        if (!parse_line(cub, line))
+        {
+            first = line;
+            break ;
+        }
+        free(line);
+        cub->current_line = NULL;
+        line = read_line(fd);
+        cub->current_line = line;
+    }
+    check_config(cub);
+    parse_map(cub, fd, first);
+    cub->current_line = NULL;
+    if (first)
+        free(first);
 }

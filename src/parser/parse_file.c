@@ -6,11 +6,12 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:36:15 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/24 13:33:41 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/01 13:43:27 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
+
 static void	check_extension(t_cub *cub, const char *path)
 {
 	int	len;
@@ -18,7 +19,7 @@ static void	check_extension(t_cub *cub, const char *path)
 	len = ft_strlen(path);
 	if (len < 5)
 		ft_error(cub, ERR_EXT);
-	if (ft_strncmp(path + len - 4, "cub", 4) != 0)
+	if (ft_strncmp(path + len - 4, ".cub", 4) != 0)
 		ft_error(cub, ERR_EXT);
 }
 

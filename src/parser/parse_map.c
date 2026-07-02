@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 12:31:31 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/06/24 13:33:28 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/01 13:43:31 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ static char	**grow_map(t_cub *cub, char **map, int count)
 	return (new_map);
 }
 
-static char	add_line(t_cub *cub, char *line, int i)
+static void	add_line(t_cub *cub, char *line, int i)
 {
-	int	len;
 	int	len;
 
 	len = ft_strlen(line);
@@ -47,7 +46,18 @@ static char	add_line(t_cub *cub, char *line, int i)
 		ft_error(cub, ERR_MALLOC);
 }
 
-void	parse_map(t_cub *cub, int fd)
+static int	process_line(t_cub *cub, char *line, int i)
+{
+	if (ft_strlen(line) > 0)
+	{
+		cub->map = grow_map(cub, cub->map, i);
+		add_line(cub, line, i);
+		return (1);
+	}
+	return (0);
+}
+
+void	parse_map(t_cub *cub, int fd, char *first_line)
 {
 	char	*line;
 	int		i;
@@ -57,20 +67,17 @@ void	parse_map(t_cub *cub, int fd)
 		ft_error(cub, ERR_MALLOC);
 	cub->map[0] = NULL;
 	i = 0;
+	if (first_line)
+		i += process_line(cub, first_line, i);
 	line = read_line(fd);
 	while (line)
 	{
-		if (ft_strlen(line) > 0)
-		{
-			cub->map = grow_map(cub, cub->map, i);
-			add_line(cub, line, i);
-			i++;
-		}
+		i += process_line(cub, line, i);
 		free(line);
 		line = read_line(fd);
 	}
 	if (i == 0)
-		ft_error(cub, ERR_MALLOC);
+		ft_error(cub, ERR_MAP);
 	cub->map[i] = NULL;
 	cub->map_height = i;
 }

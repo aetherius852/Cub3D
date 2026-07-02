@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_map.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/17 13:59:11 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/01 13:29:54 by efsilva-         ###   ########.fr       */
+/*   Created: 2026/06/15 13:51:12 by inandres          #+#    #+#             */
+/*   Updated: 2026/07/02 02:03:47 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-int	is_valid_char(char c)
+int	exit_clean(t_cub *cub, int code)
 {
-	return (c == '0' || c == '1' || c == ' '
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	if (!cub)
+		exit(code);
+	if (cub->mlx && cub->win)
+		mlx_destroy_window(cub->mlx, cub->win);
+	if (cub->mlx)
+	{
+		mlx_loop_end(cub->mlx);
+		mlx_destroy_display(cub->mlx);
+		free(cub->mlx);
+	}
+	free_cub(cub);
+	exit(code);
 }
 
-int	is_player(char c)
+int	quit_cub3d(t_cub *cub)
 {
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-char	*skip_spaces(char *line)
-{
-	while (*line == ' ' || *line == '\t')
-		line++;
-	return (line);
+	exit_clean(cub, 0);
+	return (0);
 }
