@@ -12,11 +12,8 @@
 
 #include "../../includes/Cub3d.h"
 
-static void	init_cub_data(t_cub *cub)
+void	init_cub(t_cub *cub)
 {
-	int	i;
-
-	cub->current_line = NULL;
 	cub->no_texture = NULL;
 	cub->so_texture = NULL;
 	cub->we_texture = NULL;
@@ -111,4 +108,10 @@ void	init_mlx(t_cub *cub)
 			&cub->img.bpp, &cub->img.line_len, &cub->img.endian);
 	if (!cub->img.addr)
 		ft_error(cub, ERR_MLX);
+	cub->player_x = 0;
+	cub->player_y = 0;
+	cub->player_dir = 0;
+	cub->mlx = NULL;
+	cub->win = NULL;
+	cub->img.img = NULL;
 }

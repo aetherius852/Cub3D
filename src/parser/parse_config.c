@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 02:03:57 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:24:48 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/02 02:35:21 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,27 +95,27 @@ static int	parse_line(t_cub *cub, char *line)
 
 void	parse_config(t_cub *cub, int fd)
 {
-    char	*line;
-    char	*first;
+	char	*line;
+	char	*first;
 
-    first = NULL;
-    line = read_line(fd);
-    cub->current_line = line;
-    while (line)
-    {
-        if (!parse_line(cub, line))
-        {
-            first = line;
-            break ;
-        }
-        free(line);
-        cub->current_line = NULL;
-        line = read_line(fd);
-        cub->current_line = line;
-    }
-    check_config(cub);
-    parse_map(cub, fd, first);
-    cub->current_line = NULL;
-    if (first)
-        free(first);
+	first = NULL;
+	line = read_line(fd);
+	cub->current_line = line;
+	while (line)
+	{
+		if (!parse_line(cub, line))
+		{
+			first = line;
+			break ;
+		}
+		free(line);
+		cub->current_line = NULL;
+		line = read_line(fd);
+		cub->current_line = line;
+	}
+	check_config(cub);
+	parse_map(cub, fd, first);
+	cub->current_line = NULL;
+	if (first)
+		free(first);
 }
