@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 00:00:00 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:35:42 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 10:58:30 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ void	free_cub(t_cub *cub)
 		free(cub->we_texture);
 	if (cub->ea_texture)
 		free(cub->ea_texture);
+	if (cub->floor_texture)
+		free(cub->floor_texture);
+	if (cub->ceil_texture)
+		free(cub->ceil_texture);
 	if (cub->current_line)
 		free(cub->current_line);
 	free_map(cub);

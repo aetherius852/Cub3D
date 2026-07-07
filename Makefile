@@ -6,7 +6,7 @@
 #    By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 00:00:00 by efsilva-          #+#    #+#              #
-#    Updated: 2026/07/02 00:49:48 by efsilva-         ###   ########.fr        #
+#    Updated: 2026/07/07 11:06:47 by efsilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ MLX_DIR	= minilibx-linux
 
 SRCS	= src/game/main.c \
 		  src/game/init.c \
+		  src/game/exit.c \
 		  src/game/events.c \
 		  src/parser/parse_file.c \
 		  src/parser/parse_config.c \
@@ -33,6 +34,7 @@ SRCS	= src/game/main.c \
 		  src/render/render_utils.c \
 		  src/render/textures.c \
 		  src/exit/exit.c \
+		  src/render/floor_cast.c \
 		  src/movement/input_reader.c \
 		  src/movement/player_movement.c \
 		  src/movement/player_position.c \

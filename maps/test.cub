@@ -1,6 +1,9 @@
 NO ./textures/north.xpm
 SO ./textures/south.xpm
 WE ./textures/west.xpm
+EA ./textures/east.xpm
+FT ./textures/floor.xpm
+CT ./textures/ceil.xpm
 
 
 F 76,76,75

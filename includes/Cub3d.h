@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 00:00:00 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:19:26 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 11:07:44 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define ROTSPEED            0.09
 # define DIST_EDGE_MOUSE_WRAP 10
 # define BONUS               1
+# define ACCEL_STEP			 0.015
+# define MAX_ACCEL 		  	 2.5
 
 /* ── ERRORS ── */
 # define ERR_ARGS    "Usage: ./cub3D <map.cub>\n"
@@ -85,6 +87,8 @@ typedef struct s_cub
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
+	char	*floor_texture;
+	char	*ceil_texture;
 	t_img	tex[4];
 	int		floor_rgb[3];
 	int		ceil_rgb[3];
@@ -179,9 +183,6 @@ int		validate_move(t_cub *cub, double new_x, double new_y);
 
 /* game/player_rotate.c */
 int		rotate_player(t_cub *cub, double rotdir);
-
-/* game/player_direction.c is the implementation of init_player_dir()
-   declared above in the INIT FUNCTIONS section */
 
 /* ************************************************************************** */
 /*                             RENDER FUNCTIONS                               */
