@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 02:03:57 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/07 11:05:13 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:04:45 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ static int	parse_line(t_cub *cub, char *line)
 		parse_texture(cub, &cub->we_texture, cleaned + 3);
 	else if (!ft_strncmp(cleaned, "EA ", 3))
 		parse_texture(cub, &cub->ea_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "FT ", 3))
+		parse_texture(cub, &cub->floor_texture, cleaned + 3);
+	else if (!ft_strncmp(cleaned, "CT ", 3))
+		parse_texture(cub, &cub->ceil_texture, cleaned + 3);
 	else if (!ft_strncmp(cleaned, "F ", 2))
 		parse_color(cub, cub->floor_rgb, cleaned + 2);
 	else if (!ft_strncmp(cleaned, "C ", 2))

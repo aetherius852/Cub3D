@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:09:55 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:11:37 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ static void	calc_ray(t_cub *cub, t_ray *ray, int x)
 	ray->ray_dir_y = cub->dir_y + cub->plane_y * ray->camera_x;
 	ray->map_x = (int)cub->player_x;
 	ray->map_y = (int)cub->player_y;
-	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(1.0 / ray->ray_dir_x);
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(1.0 / ray->ray_dir_y);
 	init_ray_steps(cub, ray);
 }
 
@@ -56,6 +62,8 @@ static void	calc_wall_dist(t_ray *ray)
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+	if (ray->perp_wall_dist <= 0)
+		ray->perp_wall_dist = 0.0001;
 	ray->line_height = (int)(SCREEN_H / ray->perp_wall_dist);
 	ray->draw_start = SCREEN_H / 2 - ray->line_height / 2;
 	if (ray->draw_start < 0)
@@ -84,7 +92,7 @@ static void	dda(t_cub *cub, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (cub->map[ray->map_y][ray->map_x] == '1')
+		if (is_wall(cub, ray->map_x, ray->map_y))
 			hit = 1;
 	}
 	calc_wall_dist(ray);
@@ -95,14 +103,16 @@ void	render(t_cub *cub)
 	t_ray	ray;
 	int		x;
 
+	draw_floor_ceiling(cub);
 	x = 0;
 	while (x < SCREEN_W)
 	{
 		calc_ray(cub, &ray, x);
 		dda(cub, &ray);
-		draw_ceiling_floor(cub, x, &ray);
 		draw_wall_column(cub, x, &ray);
 		x++;
 	}
+	if (BONUS)
+		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
 }

@@ -6,18 +6,23 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 02:07:03 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:19:50 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 11:25:47 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-void	init_cub(t_cub *cub)
+static void	init_cub_data(t_cub *cub)
 {
+	int	i;
+
+	cub->current_line = NULL;
 	cub->no_texture = NULL;
 	cub->so_texture = NULL;
 	cub->we_texture = NULL;
 	cub->ea_texture = NULL;
+	cub->floor_texture = NULL;
+	cub->ceil_texture = NULL;
 	cub->floor_rgb[0] = -1;
 	cub->floor_rgb[1] = -1;
 	cub->floor_rgb[2] = -1;
@@ -28,8 +33,12 @@ void	init_cub(t_cub *cub)
 	cub->map_height = 0;
 	cub->map_width = 0;
 	i = 0;
-	while (i < 4)
-		cub->tex[i++].img = NULL;
+	while (i < 6)
+	{
+		cub->tex[i].img = NULL;
+		cub->tex[i].addr = NULL;
+		i++;
+	}
 }
 
 void	init_cub(t_cub *cub)
@@ -44,8 +53,10 @@ void	init_cub(t_cub *cub)
 	cub->player_dir = 0;
 	cub->move_x = 0;
 	cub->move_y = 0;
-	cub->rotate = 0;
+	cub->rotate_left = 0;
+	cub->rotate_right = 0;
 	cub->has_moved = 0;
+	cub->accel = 1.0;
 	cub->mlx = NULL;
 	cub->win = NULL;
 	cub->img.img = NULL;
@@ -108,10 +119,4 @@ void	init_mlx(t_cub *cub)
 			&cub->img.bpp, &cub->img.line_len, &cub->img.endian);
 	if (!cub->img.addr)
 		ft_error(cub, ERR_MLX);
-	cub->player_x = 0;
-	cub->player_y = 0;
-	cub->player_dir = 0;
-	cub->mlx = NULL;
-	cub->win = NULL;
-	cub->img.img = NULL;
 }

@@ -6,24 +6,31 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 10:50:21 by inandres          #+#    #+#             */
-/*   Updated: 2026/07/02 01:55:47 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:05:24 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3d.h"
 
-static bool	is_walkable(char c)
+bool	is_walkable(char c)
 {
 	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
 static bool	is_valid_pos_wall_collision(t_cub *cub, double x, double y)
 {
-	if (x < 0 || y < 0 || x >= cub->map_width || y >= cub->map_height)
+	double	margin;
+
+	margin = 0.2;
+	if (!check_point(cub, x - margin, y - margin))
 		return (false);
-	if (!cub->map[(int)y] || (int)x >= (int)ft_strlen(cub->map[(int)y]))
+	if (!check_point(cub, x + margin, y - margin))
 		return (false);
-	return (is_walkable(cub->map[(int)y][(int)x]));
+	if (!check_point(cub, x - margin, y + margin))
+		return (false);
+	if (!check_point(cub, x + margin, y + margin))
+		return (false);
+	return (true);
 }
 
 static bool	is_valid_pos_in_map(t_cub *cub, double x, double y)

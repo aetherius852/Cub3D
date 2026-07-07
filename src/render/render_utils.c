@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/02 02:09:58 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:11:41 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ void	draw_ceiling_floor(t_cub *cub, int x, t_ray *ray)
 		put_pixel(cub, x, y++, color);
 }
 
-static t_img	*get_texture(t_cub *cub, t_ray *ray)
+int	is_wall(t_cub *cub, int x, int y)
 {
-	if (ray->side == 0 && ray->ray_dir_x > 0)
-		return (&cub->tex[3]);
-	else if (ray->side == 0)
-		return (&cub->tex[2]);
-	else if (ray->ray_dir_y > 0)
-		return (&cub->tex[1]);
-	return (&cub->tex[0]);
+	if (x < 0 || y < 0 || y >= cub->map_height)
+		return (1);
+	if (!cub->map[y] || x >= (int)ft_strlen(cub->map[y]))
+		return (1);
+	return (cub->map[y][x] == '1');
 }
 
 static t_tex_coords	get_tex_coords(t_cub *cub, t_ray *ray, t_img *tex)

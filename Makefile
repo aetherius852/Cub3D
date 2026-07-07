@@ -6,7 +6,7 @@
 #    By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 00:00:00 by efsilva-          #+#    #+#              #
-#    Updated: 2026/07/07 11:06:47 by efsilva-         ###   ########.fr        #
+#    Updated: 2026/07/07 12:11:10 by efsilva-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,15 @@ SRCS	= src/game/main.c \
 		  src/parser/utils_parser.c \
 		  src/parser/utils_map.c \
 		  src/render/render.c \
+		  src/render/minimap.c \
 		  src/render/render_utils.c \
 		  src/render/textures.c \
-		  src/exit/exit.c \
 		  src/render/floor_cast.c \
 		  src/movement/input_reader.c \
 		  src/movement/player_movement.c \
 		  src/movement/player_position.c \
 		  src/movement/player_rotate.c \
+  		  src/movement/utils_player.c \
 
 OBJS	= $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: efsilva- <efsilva-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 00:00:00 by efsilva-          #+#    #+#             */
-/*   Updated: 2026/07/07 11:07:44 by efsilva-         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:19:48 by efsilva-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@
 # include <X11/keysym.h>
 
 /* ── SCREEN ── */
-# define SCREEN_W	800
-# define SCREEN_H	600
+# define SCREEN_W	1280
+# define SCREEN_H	800
 
 /* ── GAMEPLAY ── */
-# define MOVESPEED           0.12
-# define ROTSPEED            0.09
+# define MOVESPEED           0.1
+# define ROTSPEED            0.08
 # define DIST_EDGE_MOUSE_WRAP 10
+# define MOUSE_SENS			 0.0624
 # define BONUS               1
 # define ACCEL_STEP			 0.015
 # define MAX_ACCEL 		  	 2.5
@@ -61,6 +62,14 @@ typedef struct s_img
 	int		height;
 }	t_img;
 
+typedef struct s_floor
+{
+	double	floor_x;
+	double	floor_y;
+	double	step_x;
+	double	step_y;
+}	t_floor;
+
 typedef struct s_ray
 {
 	double	camera_x;
@@ -89,7 +98,7 @@ typedef struct s_cub
 	char	*ea_texture;
 	char	*floor_texture;
 	char	*ceil_texture;
-	t_img	tex[4];
+	t_img	tex[6];
 	int		floor_rgb[3];
 	int		ceil_rgb[3];
 	char	**map;
@@ -105,7 +114,9 @@ typedef struct s_cub
 	char	*current_line;
 	int		move_x;
 	int		move_y;
-	double	rotate;
+	int		accel;
+	int		rotate_left;
+	int		rotate_right;
 	int		has_moved;
 	void	*mlx;
 	void	*win;
@@ -191,12 +202,26 @@ int		rotate_player(t_cub *cub, double rotdir);
 /* render/render.c */
 void	render(t_cub *cub);
 
+/* minimap.c */
+void	draw_minimap(t_cub *cub);
+
 /* render/render_utils.c */
 void	put_pixel(t_cub *cub, int x, int y, int color);
 void	draw_ceiling_floor(t_cub *cub, int x, t_ray *ray);
 void	draw_wall_column(t_cub *cub, int x, t_ray *ray);
+void	draw_floor_ceiling(t_cub *cub);
 
 /* render/textures.c */
 void	load_textures(t_cub *cub);
+int		is_wall(t_cub *cub, int x, int y);
+t_img	*get_texture(t_cub *cub, t_ray *ray);
+
+/* ************************************************************************** */
+/*                             MOVEMENT FUNCTIONS                             */
+/* ************************************************************************** */
+
+int		check_point(t_cub *cub, double x, double y);
+void	update_accel(t_cub *cub);
+bool	is_walkable(char c);
 
 #endif
